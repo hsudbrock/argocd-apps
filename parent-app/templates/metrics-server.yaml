@@ -8,8 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://kubernetes-sigs.github.io/metrics-server'
-    targetRevision: 3.9.0
+    repoURL: 'https://kubernetes-sigs.github.io/metrics-server/'
+    targetRevision: 3.10.0
     chart: metrics-server
   destination:
     server: https://kubernetes.default.svc
