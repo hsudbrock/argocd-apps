@@ -11,6 +11,9 @@ spec:
     repoURL: 'https://github.com/hsudbrock/argocd-apps.git'
     targetRevision: main
     path: cert-manager
+    helm:
+      parameters:
+        - installCRDs: false
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
