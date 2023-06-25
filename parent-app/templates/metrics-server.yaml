@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: 'https://kubernetes-sigs.github.io/metrics-server'
     targetRevision: 3.9.0
-    path: metrics-server
+    chart: metrics-server
   destination:
     server: https://kubernetes.default.svc
     namespace: metrics-server
