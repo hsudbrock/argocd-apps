@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager-app
+  name: cert-manager-issuers-app
   namespace: argo-cd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,7 @@ spec:
   source:
     repoURL: 'https://github.com/hsudbrock/argocd-apps.git'
     targetRevision: main
-    path: cert-manager
-    helm:
-      parameters:
-        - installCRDs: true
+    path: cert-manager-issuers
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
