@@ -10,5 +10,12 @@ metadata:
   name: vault-token
   namespace: external-secrets-operator
 data:
-  token: <blablabla our token>
+  token: <blablabla our token base64 encoded>
+```
+
+This can be generated using kubectl as follows:
+```bash
+kubectl create secret generic vault-token \
+  --from-literal=token=test \
+  --namespace=external-secrets-operator
 ```
