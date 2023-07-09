@@ -2,6 +2,12 @@ The following need to be executed on the first time running the vault (in the `v
 * `kubectl exec -it vault-app-0 -- vault operator init -n 1 -t 1`
 * `kubectl exec -it vault-app-0 -- vault operator unseal <unseal-key>`
 
+Also, we must enable key/value storage
+* `kubectl exec -it vault-app-0 -- vault secrets enable -path=secret/ kv`
+
+To create a secret, we do:
+* `kubectl exec -it vault-app-0 -- vault kv put secret/foo bar=baz`
+
 We also need to (manually) provide the external secrets operator a secret with the token for the vault, like this:
 ```yaml
 apiVersion: v1
