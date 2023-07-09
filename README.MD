@@ -19,3 +19,13 @@ kubectl create secret generic vault-token \
   --from-literal=token=test \
   --namespace=external-secrets-operator
 ```
+
+Or updated as follows:
+```bash
+NEW_TOKEN=$(echo -n "new-token" | base64)
+
+kubectl patch secret vault-token \
+  --namespace=external-secrets-operator \
+  --type='json' \
+  -p='[{"op": "replace", "path": "/data/token", "value": "'$NEW_TOKEN'"}]'
+ ```
