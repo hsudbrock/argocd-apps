@@ -6,6 +6,6 @@ description: External Secrets Operator Helm Chart
 appVersion: 1.0.0
 
 dependencies:
-  - name: external-secrets-operator
-    version: 0.9.0
+  - name: external-secrets
+    version: 0.9.1
     repository: https://charts.external-secrets.io
