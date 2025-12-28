@@ -18,6 +18,18 @@ spec:
             annotations:
               tailscale.com/expose: "true"
               tailscale.com/hostname: grafana
+        prometheus:
+          prometheusSpec:
+            retention: 7d
+            retentionSize: 4GiB
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 5Gi
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-prometheus-stack
