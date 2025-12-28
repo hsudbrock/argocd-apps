@@ -4,7 +4,7 @@ metadata:
   name: tailscale-operator-app
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - argocd.argoproj.io/resources-finalizer
 spec:
   project: default
   source:
