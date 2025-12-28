@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn-app
+  namespace: argocd
+  finalizers:
+    - argocd.argoproj.io/resources-finalizer
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.longhorn.io'
+    targetRevision: 1.10.1
+    chart: longhorn
+    helm:
+      values: |
+        defaultSettings:
+          defaultReplicaCount: 3
+        persistence:
+          defaultClass: true
+        serviceAccount:
+          create: true
+          name: longhorn-service-account
+        preUpgradeChecker:
+          jobEnabled: false
+        service:
+          ui:
+            annotations:
+              tailscale.com/expose: "true"
+              tailscale.com/hostname: longhorn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/warn: privileged
+        pod-security.kubernetes.io/audit: privileged
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
