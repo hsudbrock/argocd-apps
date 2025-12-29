@@ -24,12 +24,6 @@ spec:
               uid: loki
               access: proxy
               url: http://loki-app.loki.svc.cluster.local:3100
-          dashboards:
-            default:
-              loki-overview:
-                gnetId: 13186
-                revision: 1
-                datasource: Loki
         prometheus:
           prometheusSpec:
             retention: 7d
