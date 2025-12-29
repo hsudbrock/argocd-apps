@@ -14,10 +14,6 @@ spec:
     helm:
       values: |
         grafana:
-          sidecar:
-            skipReload: "false"
-            datasources:
-              skipReload: "false"
           service:
             annotations:
               tailscale.com/expose: "true"
