@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pgadmin4-app
+  namespace: argocd
+  finalizers:
+    - argocd.argoproj.io/resources-finalizer
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.runix.net'
+    targetRevision: 1.50.0
+    chart: pgadmin4
+    helm:
+      values: |
+        service:
+          annotations:
+            tailscale.com/expose: "true"
+            tailscale.com/hostname: pgadmin
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pgadmin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
