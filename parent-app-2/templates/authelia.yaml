@@ -1,0 +1,56 @@
+ apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authelia-app
+  namespace: argocd
+  finalizers:
+    - argocd.argoproj.io/resources-finalizer
+spec:
+  project: default
+  source:
+    repoURL: "https://charts.authelia.com"
+    targetRevision: 0.10.49
+    chart: authelia
+    helm:
+      values: |
+        service:
+          annotations:
+            tailscale.com/expose: "true"
+            tailscale.com/hostname: authelia
+        pod:
+          kind: Deployment
+          replicas: 1
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          size: 1Gi
+        configMap:
+          authentication_backend:
+            file:
+              enabled: true
+              path: /secrets/authelia-users/users_database.yml
+          session:
+            cookies:
+              - domain: tail4d7760.ts.net
+                subdomain: authelia
+          storage:
+            local:
+              enabled: true
+          notifier:
+            filesystem:
+              enabled: true
+        secret:
+          additionalSecrets:
+            authelia-users:
+              items:
+                - key: users_database.yml
+                  path: users_database.yml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: authelia
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
